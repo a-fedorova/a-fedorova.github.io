@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trustworthy AI Circle</title>
+<meta name="description" content="The Trustworthy AI Circle is a recurring, in-person event series in Zurich exploring what responsible AI means in practice.">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F6F2EC;
+    --ink: #2A2440;
+    --muted: #5A5170;
+    --violet: #6F4FE8;
+    --violet-deep: #6A4FB8;
+    --violet-soft: #8B6FF0;
+    --lilac: #E4D8F2;
+    --mist: #F1ECF5;
+    --lime: #D9E36B;
+    --serif: "Lora", Georgia, serif;
+    --sans: "DM Sans", system-ui, sans-serif;
+    --pad: 64px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--violet); text-decoration: none; }
+  a:hover { color: var(--violet-deep); }
+  .wrap { max-width: 1200px; margin: 0 auto; padding-left: var(--pad); padding-right: var(--pad); }
+  .kicker { font-size: 13px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--violet-deep); }
+
+  /* Back-to-profile bar */
+  .backbar { border-bottom: 1px solid var(--lilac); font-size: 14px; }
+  .backbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 12px; padding-bottom: 12px; }
+  .backbar a { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-weight: 500; }
+  .backbar a:hover { color: var(--ink); }
+  .backbar span { color: var(--muted); }
+
+  /* Header */
+  header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: 28px; padding-bottom: 28px; }
+  header img { height: 44px; display: block; }
+  header nav { display: flex; gap: 32px; align-items: center; font-size: 15px; font-weight: 600; }
+  header nav a { color: var(--ink); }
+  header nav a:hover { color: var(--violet-deep); }
+
+  /* Intro */
+  .intro { display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 72px; padding-top: 56px; padding-bottom: 72px; align-items: start; }
+  .intro .kicker { margin-bottom: 20px; }
+  h1 { font-family: var(--serif); font-weight: 600; font-size: 56px; line-height: 1.05; letter-spacing: -.025em; margin: 0 0 28px; text-wrap: pretty; }
+  .intro p { font-size: 18px; line-height: 1.6; color: var(--muted); margin: 0 0 18px; text-wrap: pretty; }
+  .intro p:last-child { margin-bottom: 0; }
+  .intro strong { color: var(--violet-deep); }
+  section[id] { scroll-margin-top: 24px; }
+
+  .next {
+    position: sticky; top: 24px; background: var(--violet); border-radius: 28px; overflow: hidden;
+    padding: 40px 36px 64px; color: var(--mist);
+  }
+  .next .blob { position: absolute; width: 220px; height: 220px; border-radius: 50%; background: var(--violet-soft); right: -80px; top: -90px; }
+  .next .stripe { position: absolute; left: -20%; width: 140%; height: 12px; background: var(--lime); transform: rotate(-3deg); bottom: 26px; }
+  .next > *:not(.blob):not(.stripe) { position: relative; }
+  .next .mark { width: 64px; display: block; margin-bottom: 28px; }
+  .next .kicker { color: var(--lime); margin-bottom: 12px; }
+  .next h2 { font-family: var(--serif); font-weight: 600; font-size: 32px; line-height: 1.12; margin: 0 0 14px; color: var(--mist); }
+  .next p { font-size: 16px; line-height: 1.5; color: rgba(241, 236, 245, .8); margin: 0 0 28px; }
+  .cta-lime {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    background: var(--lime); color: var(--ink); padding: 16px 24px; border-radius: 999px;
+    font-size: 16px; font-weight: 700; transition: filter .15s;
+  }
+  .cta-lime:hover { color: var(--ink); filter: brightness(1.05); }
+  .where { display: flex; gap: 10px; align-items: center; margin-top: 20px; font-size: 14px; color: rgba(241, 236, 245, .8); }
+
+  /* Events */
+  .events { padding-bottom: 80px; }
+  .events .kicker { margin-bottom: 28px; }
+  .event-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  .event {
+    border-radius: 28px; padding: 32px 34px; display: flex; flex-direction: column; gap: 14px; color: var(--ink);
+    transition: transform .15s;
+  }
+  a.event:hover { color: var(--ink); transform: translateY(-2px); }
+  .event .date { display: flex; gap: 10px; align-items: center; font-size: 14px; font-weight: 600; color: var(--violet-deep); }
+  .event h3 { font-family: var(--serif); font-weight: 600; font-size: 26px; line-height: 1.15; margin: 0; }
+  .event p { font-size: 16px; line-height: 1.5; color: var(--muted); margin: 0; }
+
+  /* Library */
+  .library { padding-bottom: 88px; }
+  .library-card { background: var(--mist); border-radius: 28px; padding: 52px 56px; position: relative; overflow: hidden; }
+  .library-card .blob { position: absolute; width: 320px; height: 320px; border-radius: 50%; background: var(--lilac); opacity: .6; right: -110px; top: -140px; }
+  .library-card .inner { position: relative; }
+  .library-card .kicker { margin-bottom: 20px; }
+  .library-card h2 { font-family: var(--serif); font-weight: 600; font-size: 40px; line-height: 1.1; letter-spacing: -.015em; margin: 0 0 40px; max-width: 640px; text-wrap: pretty; }
+  .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; margin-bottom: 44px; }
+  .step { display: flex; flex-direction: column; gap: 14px; }
+  .num { width: 40px; height: 40px; border-radius: 50%; background: var(--violet); color: var(--mist); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; }
+  .step h3 { font-family: var(--serif); font-weight: 600; font-size: 22px; line-height: 1.2; margin: 0; }
+  .step p { font-size: 16px; line-height: 1.55; color: var(--muted); margin: 0; text-wrap: pretty; }
+  .steps.last { margin-bottom: 0; }
+
+  /* Use case gallery (scroll-driven 3D ring) */
+  .gallery { position: relative; height: calc(100vh + (var(--n) - 1) * 90vh); margin-top: 24px; }
+  .gallery-stage {
+    position: sticky; top: 0; height: 100vh; overflow: hidden;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
+    padding: 24px 0;
+  }
+  .gallery-head { text-align: center; }
+  .gallery-head h2 { font-family: var(--serif); font-weight: 600; font-size: 34px; line-height: 1.1; margin: 10px 0 6px; }
+  .gallery-head p { margin: 0; font-size: 15px; color: var(--muted); }
+  .ring-view { perspective: 1800px; width: 100%; display: flex; justify-content: center; }
+  .ring { position: relative; width: var(--card-w); height: var(--card-h); transform-style: preserve-3d; }
+  .uc {
+    position: absolute; inset: 0; margin: 0; padding: 0; border: 0; background: none; cursor: zoom-in;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    border-radius: 18px; overflow: hidden;
+    box-shadow: 0 1px 0 rgba(42, 36, 64, .04), 0 18px 50px rgba(42, 36, 64, .18);
+    transition: opacity .2s;
+  }
+  .uc img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .uc:focus-visible { outline: 3px solid var(--violet); outline-offset: 4px; }
+  .gallery-caption { text-align: center; min-height: 52px; padding: 0 16px; }
+  .gallery-caption .t { font-family: var(--serif); font-weight: 600; font-size: 19px; line-height: 1.25; }
+  .gallery-caption .o { font-size: 14px; color: var(--muted); margin-top: 4px; }
+  .gallery-nav { display: flex; align-items: center; gap: 16px; font-size: 14px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .gallery-nav button {
+    width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--lilac); background: rgba(255, 255, 255, .7);
+    display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--ink);
+  }
+  .gallery-nav button:hover:not(:disabled) { border-color: var(--violet); color: var(--violet); }
+  .gallery-nav button:disabled { opacity: .35; cursor: default; }
+
+  /* Reduced motion: plain side-by-side gallery */
+  @media (prefers-reduced-motion: reduce) {
+    .gallery { height: auto; }
+    .gallery-stage { position: static; height: auto; padding: 40px 0 0; }
+    .ring-view { perspective: none; }
+    .ring { width: auto; height: auto; display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; transform: none !important; }
+    .uc { position: relative; inset: auto; width: var(--card-w); height: var(--card-h); transform: none !important; opacity: 1 !important; pointer-events: auto !important; }
+    .gallery-caption, .gallery-nav { display: none; }
+  }
+
+  /* Poster viewer */
+  .viewer { border: 0; padding: 0; background: transparent; max-width: none; max-height: none; width: 100vw; height: 100vh; }
+  .viewer::backdrop { background: rgba(42, 36, 64, .78); }
+  .viewer-inner { height: 100%; overflow: auto; display: flex; justify-content: center; padding: 64px 16px 32px; }
+  .viewer img { width: min(900px, 100%); height: auto; align-self: flex-start; border-radius: 12px; box-shadow: 0 18px 50px rgba(0, 0, 0, .3); }
+  .viewer-close {
+    position: fixed; top: 16px; right: 16px; width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer;
+    background: var(--mist); color: var(--ink); display: flex; align-items: center; justify-content: center;
+  }
+  .viewer-close:hover { background: #fff; }
+
+  /* Footer */
+  footer { border-top: 1px solid var(--lilac); }
+  footer .wrap { display: flex; align-items: center; gap: 36px; flex-wrap: wrap; padding-top: 28px; padding-bottom: 28px; }
+  footer .note { margin-left: auto; font-size: 14px; color: var(--muted); text-align: right; }
+  footer .note a { color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+  footer .note a:hover { color: var(--ink); }
+
+  /* Responsive */
+  @media (max-width: 1000px) {
+    :root { --pad: 32px; }
+    .intro { grid-template-columns: 1fr; gap: 48px; }
+    .next { position: relative; top: 0; max-width: 520px; }
+    .steps { grid-template-columns: 1fr; gap: 28px; }
+  }
+  @media (max-width: 760px) {
+    :root { --pad: 16px; }
+    header .wrap { flex-direction: column; align-items: flex-start; gap: 18px; padding-top: 20px; padding-bottom: 8px; }
+    header img { height: 38px; }
+    header nav { gap: 20px; flex-wrap: wrap; font-size: 14px; }
+    .intro { padding-top: 32px; padding-bottom: 56px; }
+    h1 { font-size: 40px; }
+    .intro p { font-size: 17px; }
+    .event-grid { grid-template-columns: 1fr; }
+    .event { padding: 26px 24px; }
+    .event h3 { font-size: 23px; }
+    .library-card { padding: 36px 24px; }
+    .library-card h2 { font-size: 32px; }
+    .cta-violet { width: 100%; justify-content: center; }
+    .backbar span { display: none; }
+    footer .wrap { gap: 24px; }
+    footer .note { margin-left: 0; text-align: left; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="backbar">
+  <div class="wrap">
+    <a href="index.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Back to Anna Fedorova</a>
+    <span>Organised by Dr. Anna Fedorova, ZHAW</span>
+  </div>
+</div>
+
+<header>
+  <div class="wrap">
+    <img src="assets/TAI-Circle-on-light.svg" alt="Trustworthy AI Circle">
+    <nav>
+      <a href="#about">About the Circle</a>
+      <a href="#events">Past events</a>
+      <a href="#library">Use case library</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="wrap intro" id="about">
+    <div>
+      <div class="kicker">About the Circle</div>
+      <h1>Join us to shape AI we can trust.</h1>
+      <p>In a time when artificial intelligence is rapidly moving from experimentation into everyday practice, the gap between high-level principles and real-world implementation is becoming increasingly visible. While frameworks for trustworthy AI are evolving, their translation into concrete decisions, workflows, and products remains an open challenge.</p>
+      <p>Against this backdrop, the Trustworthy AI Circle creates a space for practitioners, researchers, and industry experts to collectively explore what responsible AI means in practice. The Trustworthy AI Circle is a <strong>recurring, in-person event series</strong> designed to foster exchange across disciplines and roles involved in the development and governance of AI systems. Each session focuses on a concrete use case — from LLM privacy to AI translation or agentic systems.</p>
+    </div>
+
+    <aside class="next">
+      <div class="blob"></div>
+      <div class="stripe"></div>
+      <img class="mark" src="assets/bloom-light.svg" alt="">
+      <div class="kicker">What's next?</div>
+      <h2>The next Circle is on Luma.</h2>
+      <p>Check the date and topic, then save your seat — evenings fill up at around 30 people.</p>
+      <a class="cta-lime" href="https://luma.com/taic_zurich" target="_blank" rel="noopener">Check the next event<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2A2440" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <div class="where"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D9E36B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>ZHAW · Lagerstrasse 45, Zürich</div>
+    </aside>
+  </section>
+
+  <section class="wrap events" id="events">
+    <div class="kicker">Selected past events</div>
+    <div class="event-grid">
+      <a class="event" href="https://luma.com/MindTheGapAgenticAI" target="_blank" rel="noopener" style="background:#E4D8F2">
+        <div class="date"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6F4FE8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>Zurich AI Festival 2026</div>
+        <h3>Mind the Gap: Operationalising the governance in agentic AI</h3>
+        <p>A practitioner workshop on the governance gap in agentic AI — cross-functional groups pair technical design choices with legal accountability under the EU AI Act, FINMA and DSG.</p>
+      </a>
+      <a class="event" href="https://luma.com/cets9wmo" target="_blank" rel="noopener" style="background:#D9E2EF">
+        <div class="date"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6F4FE8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>17 June 2026</div>
+        <h3>Trust is a product feature</h3>
+        <p>Operationalising compliance in practice — a live demo of Pdftools’ AI Redaction, an expert panel and co-creation on building AI products that are compliant by design.</p>
+      </a>
+      <a class="event" href="https://luma.com/ou0l6hba" target="_blank" rel="noopener" style="background:#D9EAE0">
+        <div class="date"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6F4FE8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>21 May 2026</div>
+        <h3>All’s fair in AI, or is it?</h3>
+        <p>What it means to operationalise fairness — participants stress-tested fairness-evaluation tools in development and shaped what gets built next.</p>
+      </a>
+      <div class="event" style="background:#EFE2EA">
+        <div class="date"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6F4FE8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>October 2025</div>
+        <h3>Kick-off: making responsible AI actionable</h3>
+        <p>The first Circle — lightning talks and a world café on what trustworthy AI means in everyday practice.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap library" id="library">
+    <div class="library-card">
+      <div class="blob"></div>
+      <div class="inner">
+        <div class="kicker">Use case library</div>
+        <h2>Every session leaves something behind.</h2>
+        <div class="steps last">
+          <div class="step">
+            <div class="num">01</div>
+            <h3>Expert input</h3>
+            <p>Practitioners share real-world challenges of responsible AI from business, operations, technical development and policy perspectives.</p>
+          </div>
+          <div class="step">
+            <div class="num">02</div>
+            <h3>Co-creation</h3>
+            <p>The heart of each Circle: participants blend their diverse backgrounds with the practitioners’ view to shape practical approaches together.</p>
+          </div>
+          <div class="step">
+            <div class="num">03</div>
+            <h3>Actionable practice</h3>
+            <p>The result is a shared understanding and concrete practices for building trustworthy AI — collected as use cases in our library.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery" id="gallery">
+      <div class="gallery-stage">
+        <div class="gallery-head">
+          <div class="kicker">The library</div>
+          <h2>Browse the use cases</h2>
+          <p>Scroll to rotate · click a poster to read it</p>
+        </div>
+        <div class="ring-view"><div class="ring" id="ring"></div></div>
+        <div class="gallery-caption" aria-live="polite"><div class="t" id="uc-title"></div><div class="o" id="uc-org"></div></div>
+        <div class="gallery-nav">
+          <button type="button" id="uc-prev" aria-label="Previous use case"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+          <span id="uc-count"></span>
+          <button type="button" id="uc-next" aria-label="Next use case"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <img src="assets/sponsor-zhaw.png" alt="ZHAW" style="height:34px">
+    <img src="assets/sponsor-scrai.svg" alt="SCRAI" style="height:24px">
+    <img src="assets/sponsor-dizh.svg" alt="DIZH" style="height:26px">
+    <span class="note">A Responsible AI Innovation Group initiative · <a href="index.html">Anna Fedorova</a></span>
+  </div>
+</footer>
+
+<dialog class="viewer" id="viewer" aria-label="Use case poster">
+  <div class="viewer-inner" id="viewer-inner"><img id="viewer-img" alt=""></div>
+  <button type="button" class="viewer-close" id="viewer-close" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+</dialog>
+
+<script>
+  // Use case posters. To add one: put the PNG in use_case_library/, a ~900px JPG copy in use_case_library/web/, and add a line here.
+  const USE_CASES = [
+    { file: 'TAIC8-Pdftools-Use-Case', title: 'Compliance that lives in the pipeline, not in the paperwork', org: 'Pdftools · Document processing software' },
+    { file: 'TAIC7_FairAI-Use-Case', title: 'No system has ever been fair', org: 'Fairness co-creation workshop · AI recruitment tool' },
+    { file: 'TAIC6_Supertext-Use-Case', title: 'The verification that scales with the stakes', org: 'Supertext · AI translation with near-instant verification' },
+  ];
+  const POSTER_RATIO = 3179 / 2245;
+
+  (function () {
+    const gallery = document.getElementById('gallery');
+    const ring = document.getElementById('ring');
+    const titleEl = document.getElementById('uc-title');
+    const orgEl = document.getElementById('uc-org');
+    const countEl = document.getElementById('uc-count');
+    const prev = document.getElementById('uc-prev');
+    const next = document.getElementById('uc-next');
+    const viewer = document.getElementById('viewer');
+    const viewerImg = document.getElementById('viewer-img');
+    const n = USE_CASES.length;
+    const step = 360 / n;
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    let radius = 0, active = -1;
+
+    gallery.style.setProperty('--n', n);
+
+    const cards = USE_CASES.map((uc, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'uc';
+      b.setAttribute('aria-label', 'Open poster: ' + uc.title);
+      const img = document.createElement('img');
+      img.src = 'use_case_library/web/' + uc.file + '.jpg';
+      img.alt = '';
+      img.loading = 'lazy';
+      b.appendChild(img);
+      b.addEventListener('click', () => openViewer(i));
+      ring.appendChild(b);
+      return b;
+    });
+
+    function size() {
+      const maxH = Math.max(260, innerHeight - 330);
+      const w = Math.round(Math.min(340, innerWidth * 0.62, maxH / POSTER_RATIO));
+      gallery.style.setProperty('--card-w', w + 'px');
+      gallery.style.setProperty('--card-h', Math.round(w * POSTER_RATIO) + 'px');
+      radius = n <= 2 ? w * 0.6 : (w / 2) / Math.tan(Math.PI / n) + 48;
+      cards.forEach((c, i) => { c.style.transform = 'rotateY(' + (i * step) + 'deg) translateZ(' + radius + 'px)'; });
+      update();
+    }
+
+    function progress() {
+      const r = gallery.getBoundingClientRect();
+      const span = gallery.offsetHeight - innerHeight;
+      return span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
+    }
+
+    function update() {
+      if (reduced.matches) { ring.style.transform = 'none'; setActive(0); return; }
+      const rot = progress() * (n - 1) * step;
+      ring.style.transform = 'translateZ(' + (-radius) + 'px) rotateY(' + (-rot) + 'deg)';
+      cards.forEach((c, i) => {
+        const d = ((i * step - rot) % 360 + 540) % 360 - 180; // angle from the front, -180..180
+        const front = Math.abs(d) < step / 2;
+        c.style.opacity = (0.25 + 0.75 * Math.max(0, Math.cos(d * Math.PI / 180))).toFixed(3);
+        c.style.pointerEvents = front ? 'auto' : 'none';
+        c.tabIndex = front ? 0 : -1;
+      });
+      setActive(Math.round(rot / step));
+    }
+
+    function setActive(i) {
+      if (i === active) return;
+      active = i;
+      titleEl.textContent = USE_CASES[i].title;
+      orgEl.textContent = USE_CASES[i].org;
+      countEl.textContent = (i + 1) + ' / ' + n;
+      prev.disabled = i === 0;
+      next.disabled = i === n - 1;
+    }
+
+    function goTo(i) {
+      const span = gallery.offsetHeight - innerHeight;
+      const top = gallery.getBoundingClientRect().top + scrollY;
+      scrollTo({ top: top + (n > 1 ? i / (n - 1) : 0) * span, behavior: reduced.matches ? 'auto' : 'smooth' });
+    }
+    prev.addEventListener('click', () => goTo(Math.max(0, active - 1)));
+    next.addEventListener('click', () => goTo(Math.min(n - 1, active + 1)));
+
+    function openViewer(i) {
+      viewerImg.src = 'use_case_library/' + USE_CASES[i].file + '.png';
+      viewerImg.alt = 'Use case poster: ' + USE_CASES[i].title;
+      document.getElementById('viewer-inner').scrollTop = 0;
+      viewer.showModal();
+    }
+    document.getElementById('viewer-close').addEventListener('click', () => viewer.close());
+    viewer.addEventListener('click', (e) => { if (e.target === viewer || e.target.id === 'viewer-inner') viewer.close(); });
+
+    let ticking = false;
+    addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => { ticking = false; update(); });
+    }, { passive: true });
+    addEventListener('resize', size);
+    reduced.addEventListener('change', size);
+    size();
+  })();
+</script>
+</body>
+</html>
