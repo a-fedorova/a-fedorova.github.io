@@ -86,7 +86,7 @@
   .tabs a.active { background: var(--accent-100); color: var(--accent-800); }
 
   .content section { padding: 56px 48px; scroll-margin-top: var(--page-pad); }
-  .content section + section { border-top: 1px solid var(--divider); }
+  .content section + section { padding-top: 16px; }
   h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; margin: 0; }
   h2 { font-size: 36px; letter-spacing: -0.035em; line-height: 1.1; margin-top: 14px; }
   h2.title-lg { font-size: 48px; letter-spacing: -0.04em; line-height: 1.05; max-width: 18ch; }
@@ -227,12 +227,19 @@
       </nav>
     </div>
 
+    <section id="intro">
+      <p class="kicker">Researcher · Responsible AI</p>
+      <h2 class="title-lg">Dr. Anna Fedorova</h2>
+      <div class="prose">
+        <p class="lede">I work at the intersection of AI regulation, engineering practice, and safety-critical infrastructure. My research focuses on making trustworthy AI operational in real-world systems through clear requirements, risk governance, and practical implementation.</p>
+        <p class="lede">Alongside research, I organise the PhD Community of the School of Engineering and a monthly public meetup series on trustworthy AI, supported by the Digitalisation Initiative of the Canton of Zurich.</p>
+      </div>
+    </section>
+
     <section id="about">
       <p class="kicker">About</p>
       <h2 class="title-lg">Bridging governance and engineering.</h2>
       <div class="prose">
-        <p class="lede">I work at the intersection of AI regulation, engineering practice, and safety-critical infrastructure. My research focuses on making trustworthy AI operational in real-world systems through clear requirements, risk governance, and practical implementation.</p>
-        <p class="lede">Alongside research, I organise the PhD Community of the School of Engineering and a monthly public meetup series on trustworthy AI, supported by the Digitalisation Initiative of the Canton of Zurich.</p>
         <p>I am a researcher in responsible AI and AI governance at the Centre for Artificial Intelligence, ZHAW School of Engineering. My work explores how normative expectations for trustworthy AI can be translated into concrete requirements, engineering processes, and assessment instruments for safety-critical sectors such as rail, power grids, and air traffic management.</p>
         <p>I contribute to the EU-funded AI4REALNET project and support the practical adoption of responsible AI through risk-based governance, requirements engineering, and cross-disciplinary collaboration between technical and organisational teams.</p>
       </div>
@@ -337,7 +344,7 @@
 <script>
   // Highlight the tab of the section currently in view (Community belongs to About).
   const tabs = [...document.querySelectorAll('.tabs a[href^="#"]')];
-  const tabFor = { community: 'about' };
+  const tabFor = { intro: 'about', community: 'about' };
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (!e.isIntersecting) return;
